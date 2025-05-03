@@ -23,6 +23,7 @@ import {
   Linkedin,
   Twitter,
   Briefcase,
+  CircleHelp,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
@@ -30,6 +31,7 @@ import { motion } from 'framer-motion';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileMenu } from '@/components/mobile-menu';
 import { Carousel } from './ui/carousel';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
 export default function LandingPageClient() {
   const [isMounted, setIsMounted] = useState(false);
@@ -38,6 +40,7 @@ export default function LandingPageClient() {
   const recursosRef = useRef<HTMLElement>(null);
   const trabalhosRef = useRef<HTMLElement>(null);
   const precosRef = useRef<HTMLElement>(null);
+  const clientesRef = useRef<HTMLElement>(null);
   const contatoRef = useRef<HTMLElement>(null);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -73,7 +76,8 @@ export default function LandingPageClient() {
       id: 3,
       image: '/acelera-cursos.png',
       title: 'Acelera cursos',
-      description: 'Landing page para promover cursos ou treinamentos, destacando benefícios e facilitando a inscrição dos alunos.',
+      description:
+        'Landing page para promover cursos ou treinamentos, destacando benefícios e facilitando a inscrição dos alunos.',
       url: '#',
     },
     {
@@ -134,6 +138,13 @@ export default function LandingPageClient() {
               Preços
             </Link>
             <Link
+              href="#clientes"
+              onClick={(e) => scrollToSection(e, 'clientes')}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+              Clientes
+            </Link>
+            <Link
               href="#contato"
               onClick={(e) => scrollToSection(e, 'contato')}
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
@@ -171,6 +182,13 @@ export default function LandingPageClient() {
                 label: 'Preços',
                 onClick: (e) => {
                   scrollToSection(e, 'precos');
+                },
+              },
+              {
+                href: '#clientes',
+                label: 'Clientes',
+                onClick: (e) => {
+                  scrollToSection(e, 'clientes');
                 },
               },
               {
@@ -603,7 +621,7 @@ export default function LandingPageClient() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.5 }}
-                className="flex items-center justify-center w-[600px]"
+                className="flex items-center justify-center w-full"
               >
                 <div className="w-full overflow-hidden rounded-xl border border-primary/20 shadow-lg">
                   <Carousel items={portfolioItems} />
@@ -643,7 +661,12 @@ export default function LandingPageClient() {
                 title: 'De Boa na Web',
                 price: 'R$299',
                 description: 'Para quem está começando a jornada digital com o pé direito',
-                features: ['Landing page de até 3 seções', 'Domínio por 1 ano', 'Hospedagem incluída', 'Suporte por email e whatsapp'],
+                features: [
+                  'Landing page de até 4 seções',
+                  'Domínio por 1 ano',
+                  'Hospedagem incluída',
+                  'Suporte por email e whatsapp',
+                ],
                 highlight: false,
                 buttonText: 'Contratar',
               },
@@ -652,7 +675,7 @@ export default function LandingPageClient() {
                 price: 'R$499',
                 description: 'Aquele empurrãozinho para quem já está com o negócio crescendo',
                 features: [
-                  'Landing page de até 5 seções',
+                  'Landing page de até 7 seções',
                   'Domínio por 2 anos',
                   'Hospedagem incluída',
                   'Suporte por email e whatsapp',
@@ -710,7 +733,19 @@ export default function LandingPageClient() {
                       {plan.features.map((feature, i) => (
                         <li key={i} className="flex items-center gap-2">
                           <CheckCircle className="h-4 w-4 text-primary" />
-                          <span>{feature}</span>
+                          {feature.includes('Domínio') ? (
+                            <>
+                              <span>{feature}</span>
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger><CircleHelp className='text-primary'></CircleHelp></TooltipTrigger>
+                                  <TooltipContent>Consultar disponibilidade</TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            </>
+                          ) : (
+                            <span>{feature}</span>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -739,7 +774,7 @@ export default function LandingPageClient() {
       </section>
 
       {/* Testimonials */}
-      <section className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
+      <section id="clientes" ref={clientesRef} className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
 
@@ -765,22 +800,23 @@ export default function LandingPageClient() {
           <div className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: 'Maria Silva',
-                company: 'Boutique Elegance',
-                testimonial: 'Nossa landing page ficou incrível e foi entregue em tempo recorde. Recomendo!',
-                initial: 'M',
+                name: 'Dimas Neto',
+                company: 'Portfólio',
+                testimonial: 'Meu portfólio ficou incrível e foi entregue muito rápido kkkkk. Recomendo!',
+                initial: 'D',
               },
               {
-                name: 'João Oliveira',
-                company: 'Tech Solutions',
-                testimonial: 'A melhor decisão que tomamos foi contratar a Paginou. Nosso site é rápido e moderno.',
+                name: 'João Victor',
+                company: 'Portfólio',
+                testimonial: 'Ficou bão demais! Mandaram ver no meu portfólio, tá bonito do jeitim que eu queria!',
                 initial: 'J',
               },
               {
-                name: 'Ana Costa',
-                company: 'Consultoria Financeira',
-                testimonial: 'Profissionalismo e qualidade. Nossa página converteu muito mais após a mudança.',
-                initial: 'A',
+                name: 'Beatriz Fernandes',
+                company: 'Projeto',
+                testimonial:
+                  'Visual perfeitooo e deixaram tudo prontinho pra eu apresentar a Landing Page do meu site para a faculdade.',
+                initial: 'B',
               },
             ].map((testimonial, index) => (
               <motion.div
