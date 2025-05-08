@@ -666,8 +666,8 @@ export default function LandingPageClient() {
 
       {/* Pricing Section */}
       <section id="precos" ref={precosRef} className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background"></div>
-
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
         <div className="container px-4 md:px-6 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -817,8 +817,7 @@ export default function LandingPageClient() {
 
       {/* Testimonials */}
       <section id="clientes" ref={clientesRef} className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background"></div>
 
         <div className="container px-4 md:px-6 relative">
           <motion.div
@@ -896,8 +895,8 @@ export default function LandingPageClient() {
         ref={contatoRef}
         className="w-full py-12 md:py-24 lg:py-32 border-t border-primary/10 relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background"></div>
-
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
         <div className="container px-4 md:px-6 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
