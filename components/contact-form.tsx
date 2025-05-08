@@ -75,6 +75,7 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
   useEffect(() => {
     if (messagePrefix) {
       setFormData((prev) => ({ ...prev, message: messagePrefix }));
+      setErrors((prev) => ({ ...prev, message: '' }));
     }
   }, [messagePrefix]);
 
