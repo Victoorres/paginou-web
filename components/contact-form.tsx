@@ -4,8 +4,8 @@ import type React from 'react';
 
 import emailjs from 'emailjs-com';
 import { Button } from '@/components/ui/button';
-import { useState, useEffect, type FormEvent, useRef } from 'react';
-import { AlertCircle, Loader2, Clock, X, Send, MessageCircle, MessageCircleMore } from 'lucide-react';
+import { useState, useEffect, type FormEvent } from 'react';
+import { AlertCircle, Loader2, Clock, X, Send, MessageCircleMore } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface FormData {
@@ -27,17 +27,16 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
   });
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const whatsappNumber = process.env.NEXT_PUBLIC_CONTACT_PHONE;
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [lastSubmitTime, setLastSubmitTime] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number>(0);
   const [showTimeRemaining, setShowTimeRemaining] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
-  const whatsappNumber = process.env.NEXT_PUBLIC_CONTACT_PHONE;
 
-  // Carregar o último tempo de envio do localStorage
   useEffect(() => {
+    emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_USER_ID as string);
     const storedTime = localStorage.getItem('lastContactSubmitTime');
     if (storedTime) {
       const parsedTime = Number.parseInt(storedTime, 10);
@@ -45,7 +44,7 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
 
       const currentTime = Date.now();
       const elapsedTime = currentTime - parsedTime;
-      const waitTime = 30 * 60 * 1000; // 30 minutos em milissegundos
+      const waitTime = 30 * 60 * 1000;
 
       if (elapsedTime < waitTime) {
         setTimeRemaining(Math.ceil((waitTime - elapsedTime) / 1000));
@@ -54,7 +53,6 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
     }
   }, []);
 
-  // Atualizar o contador regressivo
   useEffect(() => {
     if (timeRemaining <= 0 || !showTimeRemaining) {
       return;
@@ -77,15 +75,6 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
   useEffect(() => {
     if (messagePrefix) {
       setFormData((prev) => ({ ...prev, message: messagePrefix }));
-
-      setTimeout(() => {
-        const messageField = document.getElementById('message');
-        if (messageField) {
-          messageField.focus();
-          const textLength = messagePrefix.length;
-          (messageField as HTMLTextAreaElement).setSelectionRange(textLength, textLength);
-        }
-      }, 100);
     }
   }, [messagePrefix]);
 
@@ -114,7 +103,6 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Limpa o erro do campo quando o usuário começa a digitar
     if (errors[name as keyof FormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -152,8 +140,6 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
   };
 
   const handleConfirmSubmit = async () => {
-    if (!formRef.current) return;
-
     setShowConfirmation(false);
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -163,9 +149,8 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
 
       const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
       const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-      const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID;
 
-      if (!serviceId || !templateId || !userId) {
+      if (!serviceId || !templateId) {
         toast({
           title: 'Erro',
           description: 'Variáveis de ambiente não estão definidas.',
@@ -173,21 +158,27 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
         return;
       }
 
-      emailjs.sendForm(serviceId, templateId, formRef.current, userId).then(
-        (result) => {
-          toast({
-            title: 'Sucesso',
-            description: 'Mensagem enviada com sucesso!',
-          });
-        },
-        (error) => {
-          toast({
-            title: 'Erro ao enviar mensagem',
-            description: 'Servidor indisponível, tente novamente mais tarde.',
-          });
-          console.error(error.text);
-        }
-      );
+      await emailjs
+        .send(serviceId, templateId, {
+          name: formData.name,
+          message: formData.message,
+          email: formData.email,
+        })
+        .then(
+          (result) => {
+            toast({
+              title: 'Sucesso',
+              description: 'Mensagem enviada com sucesso!',
+            });
+          },
+          (error) => {
+            toast({
+              title: 'Erro ao enviar mensagem',
+              description: 'Servidor indisponível, tente novamente mais tarde.',
+            });
+            console.error(error.text);
+          }
+        );
 
       const currentTime = Date.now();
       localStorage.setItem('lastContactSubmitTime', currentTime.toString());
@@ -213,28 +204,28 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
     setShowConfirmation(false);
   };
 
-  const handleSendWhatsApp = async () => {
+  const handleSendWhatsApp = () => {
     if (!validateForm()) {
       return;
     }
-
+  
+    const message = `*Contato via Cliqui*
+  Nome: ${formData.name}
+  Email: ${formData.email}
+  
+  ${formData.message}`;
+  
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  
+    window.open(whatsappUrl, '_blank');
+  
     toast({
       title: 'Abrindo WhatsApp',
-      description: 'O WhatsApp será aberto com sua mensagem.',
+      description: 'O WhatsApp foi aberto com sua mensagem.',
       duration: 3000,
     });
-
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    const message = `*Contato via Cliqui*
-    Nome: ${formData.name}
-    Email: ${formData.email}
-
-    ${formData.message}`;
-
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
   };
+  
 
   const formatTimeRemaining = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -296,7 +287,7 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
         </div>
       )}
 
-      <form onSubmit={handleSubmitAttempt} ref={formRef} className="space-y-4">
+      <form onSubmit={handleSubmitAttempt} className="space-y-4">
         <div className="grid gap-2">
           <label htmlFor="name" className="text-sm font-medium leading-none">
             Nome
@@ -310,7 +301,7 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
               errors.name ? 'border-red-500' : 'border-input'
             } bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
             placeholder="Seu nome"
-            disabled={isSubmitting || showTimeRemaining}
+            disabled={isSubmitting}
             aria-invalid={errors.name ? 'true' : 'false'}
             aria-describedby={errors.name ? 'name-error' : undefined}
           />
@@ -335,7 +326,7 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
               errors.email ? 'border-red-500' : 'border-input'
             } bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
             placeholder="seu@email.com"
-            disabled={isSubmitting || showTimeRemaining}
+            disabled={isSubmitting}
             aria-invalid={errors.email ? 'true' : 'false'}
             aria-describedby={errors.email ? 'email-error' : undefined}
           />
@@ -359,7 +350,7 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
               errors.message ? 'border-red-500' : 'border-input'
             } bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`}
             placeholder="Como podemos ajudar?"
-            disabled={isSubmitting || showTimeRemaining}
+            disabled={isSubmitting}
             aria-invalid={errors.message ? 'true' : 'false'}
             aria-describedby={errors.message ? 'message-error' : undefined}
           />
@@ -404,7 +395,7 @@ export function ContactForm({ onSuccess, messagePrefix }: ContactFormProps) {
             variant="outline"
             className="w-full border-green-500/30 text-green-600 dark:text-green-500 hover:bg-green-500/10 hover:text-green-600 dark:hover:text-green-400"
             onClick={handleSendWhatsApp}
-            disabled={isSubmitting || showTimeRemaining}
+            disabled={isSubmitting}
           >
             Enviar por WhatsApp
             <MessageCircleMore className="h-4 w-4 transition-transform group-hover:translate-x-1" />

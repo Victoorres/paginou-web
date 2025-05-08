@@ -219,7 +219,7 @@ export default function LandingPageClient() {
 
       {/* Hero Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden mt-12 md:mt-0">
-      <div className="container px-4 md:px-6 relative">
+        <div className="container px-4 md:px-6 relative">
           {/* Background decorative elements */}
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
@@ -258,16 +258,24 @@ export default function LandingPageClient() {
                 transition={{ delay: 0.4, duration: 0.5 }}
                 className="flex flex-col gap-2 min-[400px]:flex-row"
               >
-                <Button
-                  size="lg"
-                  className="group relative overflow-hidden bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground"
+                <Link
+                  href="#contato"
+                  onClick={(e) => {
+                    scrollToSection(e, 'contato');
+                    changeMessagePrefix('Olá, gostaria criar uma landing page para meu projeto...');
+                  }}
                 >
-                  <span className="relative z-10 flex items-center gap-1">
-                    Criar minha landing page
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                  <span className="absolute inset-0 z-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity group-hover:opacity-100"></span>
-                </Button>
+                  <Button
+                    size="lg"
+                    className="group relative overflow-hidden bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground"
+                  >
+                    <span className="relative z-10 flex items-center gap-1">
+                      Criar minha landing page
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                    <span className="absolute inset-0 z-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity group-hover:opacity-100"></span>
+                  </Button>
+                </Link>
                 <Link
                   href="#contato"
                   onClick={(e) => {
