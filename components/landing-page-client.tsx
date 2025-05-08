@@ -32,9 +32,14 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { MobileMenu } from '@/components/mobile-menu';
 import { Carousel } from './ui/carousel';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import Image from 'next/image';
+import { ContactForm } from './contact-form';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function LandingPageClient() {
+  const [messagePrefix, setMessagePrefix] = useState<string>('');
   const [isMounted, setIsMounted] = useState(false);
+  const isMobile = useIsMobile();
 
   const sobreRef = useRef<HTMLElement>(null);
   const recursosRef = useRef<HTMLElement>(null);
@@ -46,11 +51,22 @@ export default function LandingPageClient() {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     const element = document.getElementById(id);
+    const headerHeight = isMobile ? 64 : 0;
+
     if (element) {
       setTimeout(() => {
-        element.scrollIntoView({ behavior: 'smooth' });
+        const offsetTop = element.offsetTop;
+        window.scrollTo({
+          top: offsetTop - headerHeight,
+          behavior: 'smooth',
+        });
       }, 200);
     }
+  };
+
+  const changeMessagePrefix = (message: string) => {
+    setMessagePrefix('');
+    setMessagePrefix(message);
   };
 
   useEffect(() => {
@@ -97,14 +113,12 @@ export default function LandingPageClient() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-background via-background to-background/80">
       {/* Header */}
-      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="fixed top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex gap-2 items-center text-xl font-bold">
-            <div className="relative">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary to-secondary blur-sm opacity-70"></div>
-              <Rocket className="relative h-6 w-6 text-primary-foreground" />
+            <div className="relative w-24 h-24">
+              <Image src="/cliqui-logo.png" alt="UP Club Logo" fill className="object-contain" priority />
             </div>
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Paginou</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -204,8 +218,8 @@ export default function LandingPageClient() {
       </header>
 
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden">
-        <div className="container px-4 md:px-6 relative">
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden mt-12 md:mt-0">
+      <div className="container px-4 md:px-6 relative">
           {/* Background decorative elements */}
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
@@ -234,7 +248,7 @@ export default function LandingPageClient() {
                   Rápidas, Baratas e Inovadoras
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  A <span className="font-semibold text-primary">Paginou</span> cria landing pages profissionais usando
+                  A <span className="font-semibold text-primary">Cliqui</span> cria landing pages profissionais usando
                   NextJS, garantindo velocidade, qualidade e segurança para o seu domínio.
                 </p>
               </div>
@@ -254,7 +268,13 @@ export default function LandingPageClient() {
                   </span>
                   <span className="absolute inset-0 z-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity group-hover:opacity-100"></span>
                 </Button>
-                <Link href="#contato" onClick={(e) => scrollToSection(e, 'contato')}>
+                <Link
+                  href="#contato"
+                  onClick={(e) => {
+                    scrollToSection(e, 'contato');
+                    changeMessagePrefix('Olá, gostaria de mais informações sobre os serviços e...');
+                  }}
+                >
                   <Button
                     size="lg"
                     variant="outline"
@@ -470,9 +490,7 @@ export default function LandingPageClient() {
               </div>
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 Por que escolher a{' '}
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  Paginou
-                </span>
+                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Cliqui</span>
                 ?
               </h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
@@ -604,7 +622,13 @@ export default function LandingPageClient() {
                   </li>
                 </ul>
                 <div className="pt-4">
-                  <Link href="#contato" onClick={(e) => scrollToSection(e, 'contato')}>
+                  <Link
+                    href="#contato"
+                    onClick={(e) => {
+                      scrollToSection(e, 'contato');
+                      changeMessagePrefix('Olá, gostaria de uma landing page como as do portfólio e...');
+                    }}
+                  >
                     <Button className="group relative overflow-hidden bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground">
                       <span className="relative z-10 flex items-center gap-1">
                         Quero uma landing page assim
@@ -738,7 +762,9 @@ export default function LandingPageClient() {
                               <span>{feature}</span>
                               <TooltipProvider>
                                 <Tooltip>
-                                  <TooltipTrigger><CircleHelp className='text-primary'></CircleHelp></TooltipTrigger>
+                                  <TooltipTrigger>
+                                    <CircleHelp className="text-primary"></CircleHelp>
+                                  </TooltipTrigger>
                                   <TooltipContent>Consultar disponibilidade</TooltipContent>
                                 </Tooltip>
                               </TooltipProvider>
@@ -751,7 +777,15 @@ export default function LandingPageClient() {
                     </ul>
                   </CardContent>
                   <CardFooter>
-                    <Link href="#contato" onClick={(e) => scrollToSection(e, 'contato')}>
+                    <Link
+                      href="#contato"
+                      onClick={(e) => {
+                        scrollToSection(e, 'contato');
+                        changeMessagePrefix(
+                          `Olá, tenho interesse no plano ${plan.title} (${plan.price}) e gostaria de mais informações sobre...`
+                        );
+                      }}
+                    >
                       <Button
                         className={`w-full group relative overflow-hidden ${
                           plan.highlight
@@ -793,7 +827,7 @@ export default function LandingPageClient() {
               </div>
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">O que nossos clientes dizem</h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Centenas de empresas já transformaram sua presença online com a Paginou.
+                Centenas de empresas já transformaram sua presença online com a Cliqui.
               </p>
             </div>
           </motion.div>
@@ -889,23 +923,40 @@ export default function LandingPageClient() {
                 transition={{ delay: 0.2, duration: 0.5 }}
                 className="flex flex-col gap-2 min-[400px]:flex-row"
               >
-                <Button
-                  size="lg"
-                  className="group relative overflow-hidden bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground"
+                <Link
+                  href="#contato"
+                  onClick={(e) => {
+                    scrollToSection(e, 'contato');
+                    changeMessagePrefix('Olá, gostaria de mais informações sobre os serviços e...');
+                  }}
                 >
-                  <span className="relative z-10 flex items-center gap-1">
-                    Começar agora
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                  <span className="absolute inset-0 z-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity group-hover:opacity-100"></span>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-primary/20 hover:bg-primary/10 hover:text-primary"
+                  <Button
+                    size="lg"
+                    className="group relative overflow-hidden bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground"
+                  >
+                    <span className="relative z-10 flex items-center gap-1">
+                      Começar agora
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                    <span className="absolute inset-0 z-0 bg-gradient-to-r from-secondary to-primary opacity-0 transition-opacity group-hover:opacity-100"></span>
+                  </Button>
+                </Link>
+
+                <Link
+                  href="#contato"
+                  onClick={(e) => {
+                    scrollToSection(e, 'contato');
+                    changeMessagePrefix('Olá, gostaria de agendar uma demonstração para ver como funciona e...');
+                  }}
                 >
-                  Agendar demonstração
-                </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-primary/20 hover:bg-primary/10 hover:text-primary"
+                  >
+                    Agendar demonstração
+                  </Button>
+                </Link>
               </motion.div>
             </div>
             <motion.div
@@ -924,42 +975,7 @@ export default function LandingPageClient() {
                       Preencha o formulário abaixo e entraremos em contato em até 24 horas.
                     </p>
                   </div>
-                  <div className="space-y-3">
-                    <div className="grid gap-2">
-                      <label htmlFor="name" className="text-sm font-medium leading-none">
-                        Nome
-                      </label>
-                      <input
-                        id="name"
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="Seu nome"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <label htmlFor="email" className="text-sm font-medium leading-none">
-                        Email
-                      </label>
-                      <input
-                        id="email"
-                        type="email"
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="seu@email.com"
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <label htmlFor="message" className="text-sm font-medium leading-none">
-                        Mensagem
-                      </label>
-                      <textarea
-                        id="message"
-                        className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="Como podemos ajudar?"
-                      />
-                    </div>
-                    <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-primary-foreground">
-                      Enviar mensagem
-                    </Button>
-                  </div>
+                  <ContactForm messagePrefix={messagePrefix} />
                 </div>
               </div>
             </motion.div>
@@ -971,14 +987,12 @@ export default function LandingPageClient() {
       <footer className="w-full border-t border-primary/10 py-6 md:py-0">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
           <div className="flex gap-2 items-center text-lg font-bold">
-            <div className="relative">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary to-secondary blur-sm opacity-70"></div>
-              <Rocket className="relative h-5 w-5 text-primary-foreground" />
+            <div className="relative w-16 h-16">
+              <Image src="/cliqui-logo.png" alt="UP Club Logo" fill className="object-contain" priority />
             </div>
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Paginou</span>
           </div>
           <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-            © {new Date().getFullYear()} Paginou. Todos os direitos reservados.
+            © {new Date().getFullYear()} Cliqui. Todos os direitos reservados.
           </p>
           <div className="flex items-center gap-4">
             <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">

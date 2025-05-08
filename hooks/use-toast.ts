@@ -1,6 +1,5 @@
 "use client"
 
-// Inspired by react-hot-toast library
 import * as React from "react"
 
 import type {
@@ -141,6 +140,14 @@ function dispatch(action: Action) {
 }
 
 type Toast = Omit<ToasterToast, "id">
+
+export type ToastVariants = "default" | "destructive" | "success"
+
+const variantStyles: Record<ToastVariants, string> = {
+  default: "border bg-background text-foreground",
+  destructive: "destructive group border-destructive bg-destructive text-destructive-foreground",
+  success: "success group border-green-500 bg-green-500 text-white dark:border-green-600 dark:bg-green-600",
+}
 
 function toast({ ...props }: Toast) {
   const id = genId()
