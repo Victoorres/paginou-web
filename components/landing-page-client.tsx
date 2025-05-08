@@ -24,6 +24,8 @@ import {
   Twitter,
   Briefcase,
   CircleHelp,
+  MessageSquare,
+  TrendingUp,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
@@ -376,13 +378,25 @@ export default function LandingPageClient() {
                     icon: Target,
                     title: 'Foco em Conversão',
                     description:
-                      'Projetadas para guiar o visitante a realizar uma ação específica, como preencher um formulário ou fazer uma compra.',
+                      'Cada elemento é pensado para levar o visitante a uma única ação, como gerar leads ou efetuar uma compra.',
+                  },
+                  {
+                    icon: TrendingUp,
+                    title: 'Alta Performance',
+                    description:
+                      'Estrutura otimizada para SEO, velocidade e experiência do usuário, maximizando o impacto da sua campanha.',
                   },
                   {
                     icon: BarChart,
                     title: 'Resultados Mensuráveis',
                     description:
-                      'Permitem acompanhar métricas claras de desempenho e ROI para suas campanhas de marketing.',
+                      'Integração com ferramentas de análise para acompanhar taxas de conversão, cliques e ROI com precisão.',
+                  },
+                  {
+                    icon: MessageSquare,
+                    title: 'Comunicação Direta',
+                    description:
+                      'Mensagens objetivas e visuais claros que eliminam distrações e destacam sua proposta de valor.',
                   },
                 ].map((item, index) => (
                   <motion.div
@@ -412,7 +426,7 @@ export default function LandingPageClient() {
               transition={{ duration: 0.5 }}
               className="flex flex-col space-y-6"
             >
-              <div className="relative h-[200px] overflow-hidden rounded-xl border border-primary/20">
+              <div className="relative h-[301px] overflow-hidden rounded-xl border border-primary/20">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-background"></div>
                 <div className="absolute inset-0 flex items-center justify-center p-6">
                   <div className="text-center">
@@ -512,25 +526,27 @@ export default function LandingPageClient() {
                 icon: Zap,
                 title: 'Ultra Rápido',
                 description:
-                  'Landing pages otimizadas para carregamento instantâneo com NextJS e tecnologias modernas.',
+                  'Seu site carrega em milissegundos, garantindo máxima performance e melhor ranqueamento no Google.',
                 color: 'from-primary to-primary/70',
               },
               {
                 icon: Globe,
                 title: 'Domínio Seguro',
-                description: 'Registramos e configuramos seu domínio com certificado SSL e proteção avançada.',
+                description:
+                  'Cuidamos de todo o processo: registro do domínio, instalação de SSL e configurações avançadas.',
                 color: 'from-secondary to-secondary/70',
               },
               {
                 icon: Code,
                 title: 'Alta Tecnologia',
-                description: 'Utilizamos NextJS e as mais modernas tecnologias web para criar experiências incríveis.',
+                description: 'Aplicações modernas com Next.js, arquitetura otimizada e escalabilidade garantida.',
                 color: 'from-primary to-secondary',
               },
               {
                 icon: Shield,
                 title: 'Segurança Total',
-                description: 'Proteção contra ataques e monitoramento constante para manter seu site seguro.',
+                description:
+                  'Firewall inteligente, monitoramento 24/7 e atualizações automáticas contra vulnerabilidades.',
                 color: 'from-secondary to-primary',
               },
               {
@@ -817,7 +833,7 @@ export default function LandingPageClient() {
 
       {/* Testimonials */}
       <section id="clientes" ref={clientesRef} className="w-full py-12 md:py-24 lg:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background"></div>
 
         <div className="container px-4 md:px-6 relative">
           <motion.div
