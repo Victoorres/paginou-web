@@ -80,7 +80,8 @@ export default function LandingPageClient() {
       id: 1,
       image: '/up-connection.png',
       title: 'UP Connection',
-      description: 'Landing page vibrante e envolvente, evidenciando os benefícios premium e o networking profissional.',
+      description:
+        'Landing page vibrante e envolvente, evidenciando os benefícios premium e o networking profissional.',
       url: '#',
     },
     {
@@ -246,11 +247,11 @@ export default function LandingPageClient() {
                   <span className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
                     Landing Pages
                   </span>{' '}
-                  Rápidas, Baratas e Inovadoras
+                  inteligentes, acessíveis e feitas para converter.
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  A <span className="font-semibold text-primary">cliqüi</span> cria landing pages profissionais usando
-                  NextJS, garantindo velocidade, qualidade e segurança para o seu domínio.
+                  A <span className="font-semibold text-primary">cliqüi</span> cria landing pages profissionais e sites
+                  completos com NextJS, oferecendo velocidade, qualidade e segurança para o seu domínio.
                 </p>
               </div>
               <motion.div
@@ -511,7 +512,9 @@ export default function LandingPageClient() {
               </div>
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 Por que escolher a{' '}
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><b>cliqüi</b></span>
+                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                  <b>cliqüi</b>
+                </span>
                 ?
               </h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
