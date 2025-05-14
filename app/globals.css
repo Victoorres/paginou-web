@@ -3,13 +3,12 @@
 @tailwind utilities;
 
 body {
-  font-family: 'MinhaFonte', sans-serif !important;
+  font-family: 'Delius', sans-serif !important;
 }
 
-
 @font-face {
-  font-family: 'MinhaFonte';
-  src: url('/fonts/Odin Rounded - Bold.otf') format('opentype');
+  font-family: 'Delius';
+  src: url('/fonts/Delius-Regular.ttf') format('opentype');
 
 }
 
