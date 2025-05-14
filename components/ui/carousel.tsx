@@ -68,7 +68,7 @@ export function Carousel({ items, autoPlay = true, interval = 5000 }: CarouselPr
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl">
+      <div className="relative aspect-[12/9] w-full overflow-hidden rounded-xl">
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
             key={currentIndex}

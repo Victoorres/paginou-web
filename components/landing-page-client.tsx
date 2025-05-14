@@ -78,31 +78,30 @@ export default function LandingPageClient() {
   const portfolioItems = [
     {
       id: 1,
-      image: '/encontre-ja.png',
-      title: 'EncontreJá',
-      description: 'Site para buscar profissionais qualificados para serviços rápidos, sem complicação.',
+      image: '/up-connection.png',
+      title: 'UP Connection',
+      description: 'Landing page vibrante e envolvente, evidenciando os benefícios premium e o networking profissional.',
       url: '#',
     },
     {
       id: 2,
-      image: '/up-connection.png',
-      title: 'UP Connection',
-      description: 'Site institucional para empresa de consultoria financeira com formulários de contato e blog.',
+      image: '/portfolio-dimas.png',
+      title: 'Dimas Neto',
+      description: 'Landing page com design moderno e vibrante, destacando o portfólio tecnológico de Dimas Neto.',
       url: '#',
     },
     {
       id: 3,
-      image: '/acelera-cursos.png',
-      title: 'Acelera cursos',
-      description:
-        'Landing page para promover cursos ou treinamentos, destacando benefícios e facilitando a inscrição dos alunos.',
+      image: '/ma-contador.png',
+      title: 'MA - Contador',
+      description: 'Landing page com design moderno, destacando os serviços e a expertise do contador Matheus Amancio.',
       url: '#',
     },
     {
       id: 4,
-      image: '/portfolio-dimas.png',
-      title: 'Portfólio',
-      description: 'Landing page com design moderno e vibrante, destacando o portfólio tecnológico de Dimas Neto.',
+      image: '/encontre-ja.png',
+      title: 'EncontreJá',
+      description: 'Site para buscar profissionais qualificados para serviços rápidos, sem complicação.',
       url: '#',
     },
   ];
