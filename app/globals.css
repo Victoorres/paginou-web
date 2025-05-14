@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Delius', sans-serif !important;
+  font-family: 'Quicksand', sans-serif !important;
 }
 
 @font-face {
-  font-family: 'Delius';
-  src: url('/fonts/Delius-Regular.ttf') format('opentype');
+  font-family: 'Quicksand';
+  src: url('/fonts/Quicksand.ttf') format('opentype');
 
 }
 
