@@ -8,7 +8,6 @@ import { Toaster } from '@/components/ui/toaster';
 const outfit = Outfit({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-outfit',
 });
 
 export const metadata = {
@@ -19,7 +18,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${outfit.variable}`} suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         {/* Ícone padrão */}
         <link rel="icon" href="/favicon.ico" />

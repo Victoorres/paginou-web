@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: 'MinhaFonte', sans-serif !important;
+}
+
+
+@font-face {
+  font-family: 'MinhaFonte';
+  src: url('/fonts/Ardhita.otf') format('opentype');
+
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
