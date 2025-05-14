@@ -250,7 +250,7 @@ export default function LandingPageClient() {
                   Rápidas, Baratas e Inovadoras
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  A <span className="font-semibold text-primary">Cliqui</span> cria landing pages profissionais usando
+                  A <span className="font-semibold text-primary">cliqüi</span> cria landing pages profissionais usando
                   NextJS, garantindo velocidade, qualidade e segurança para o seu domínio.
                 </p>
               </div>
@@ -512,7 +512,7 @@ export default function LandingPageClient() {
               </div>
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 Por que escolher a{' '}
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Cliqui</span>
+                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"><b>cliqüi</b></span>
                 ?
               </h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
