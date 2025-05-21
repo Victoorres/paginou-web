@@ -725,7 +725,7 @@ export default function LandingPageClient() {
                 price: 'R$499',
                 description: 'Aquele empurrãozinho para quem já está com o negócio crescendo',
                 features: [
-                  'Landing page de até 7 seções',
+                  'Landing page de seções ilimitadas',
                   'Domínio por 2 anos',
                   'Hospedagem incluída',
                   'Suporte por email e whatsapp',
@@ -739,9 +739,9 @@ export default function LandingPageClient() {
                 price: 'R$799',
                 description: 'Para quem quer arrasar online e mostrar que chegou para ficar',
                 features: [
-                  'Landing page personalizada',
+                  'Landing page de seções ilimitadas',
                   'Domínio por 3 anos',
-                  'Hospedagem premium',
+                  'Hospedagem incluída',
                   'Suporte prioritário',
                   'Formulário de contato',
                   'Ajustes mensais no design',
@@ -1020,22 +1020,20 @@ export default function LandingPageClient() {
             © {new Date().getFullYear()} Cliqui. Todos os direitos reservados.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
+            <Link
+              target="_blank"
+              href="https://www.instagram.com/usecliqui/"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               <Instagram className="h-5 w-5" />
               <span className="sr-only">Instagram</span>
             </Link>
-            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <Facebook className="h-5 w-5" />
-              <span className="sr-only">Facebook</span>
-            </Link>
-            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <Twitter className="h-5 w-5" />
-              <span className="sr-only">Twitter</span>
-            </Link>
-            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <Linkedin className="h-5 w-5" />
-              <span className="sr-only">LinkedIn</span>
-            </Link>
+            <Facebook className="h-5 w-5 text-muted-foreground cursor-not-allowed" />
+            <span className="sr-only">Facebook</span>
+            <Twitter className="h-5 w-5 text-muted-foreground cursor-not-allowed" />
+            <span className="sr-only">Twitter</span>
+            <Linkedin className="h-5 w-5 text-muted-foreground cursor-not-allowed" />
+            <span className="sr-only">LinkedIn</span>
           </div>
         </div>
       </footer>
