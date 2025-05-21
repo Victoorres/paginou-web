@@ -861,20 +861,20 @@ export default function LandingPageClient() {
               {
                 name: 'Dimas Neto',
                 company: 'Portfólio',
-                testimonial: 'Meu portfólio ficou incrível e foi entregue muito rápido kkkkk. Recomendo!',
+                testimonial: 'Meu portfólio ficou incrível e foi entregue muito rápido. Recomendo de olhos vendados!',
                 initial: 'D',
               },
               {
                 name: 'João Victor',
                 company: 'Portfólio',
-                testimonial: 'Ficou bão demais! Mandaram ver no meu portfólio, tá bonito do jeitim que eu queria!',
+                testimonial: 'Ficou bom demais! Mandaram ver no meu portfólio, tá bonito do jeitim que eu queria!',
                 initial: 'J',
               },
               {
                 name: 'Beatriz Fernandes',
                 company: 'Projeto',
                 testimonial:
-                  'Visual perfeitooo e deixaram tudo prontinho pra eu apresentar a Landing Page do meu site para a faculdade.',
+                  'Parabéns, o visual ficou perfeito, tive que apresentar esse projeto na faculdade e amaram!',
                 initial: 'B',
               },
             ].map((testimonial, index) => (
