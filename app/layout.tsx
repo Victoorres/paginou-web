@@ -3,6 +3,7 @@ import '@/app/globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Outfit } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
+import MouseMoveEffect from '@/components/mouse-effect';
 
 // Configuração da fonte Outfit
 const outfit = Outfit({
@@ -31,7 +32,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-        <Toaster />
+          <MouseMoveEffect />
+          <Toaster />
           {children}
         </ThemeProvider>
       </body>
